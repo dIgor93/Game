@@ -3,7 +3,7 @@
 
 #include <SFML\Graphics.hpp>
 #include "Globals.hpp"
-#include "Enemy.hpp"
+#include "Level.hpp"
 
 using namespace sf;
 
@@ -14,37 +14,44 @@ public:
 	float offsetDx;
 public:
 	Enemy();
-	Enemy(AnimationManager &a, int X, int Y, bool dir, int Health);
+	Enemy(AnimationManager &a, Level &lev, int X, int Y);
 	void update(float time);
 	void Collision();
 };
 
 Enemy::Enemy() {}
 
-Enemy::Enemy(AnimationManager &a, int X, int Y, bool dir, int Health){
-	Name = "Enemy";
-	health = Health;
-	anim = a;
-	anim.animList["move"].sprite.setColor(Color::Blue);
-	anim.Flip(dir);
-	anim.Set("move");
-	x = X;
-	y = Y;
-	dx = 0.2;
-	offsetDx = 0;
+Enemy::Enemy(AnimationManager &a, Level &lev, int X, int Y):Entity(a,X,Y) {
+	option("Enemy", 0.3, 10, "move");
+
+	//Name = "Enemy";
+	//health = Health;
+	//anim = a;
+	//anim.animList["move"].sprite.setColor(Color::Blue);
+	//anim.Flip(dir);
+	//anim.Set("move");
+	//x = X;
+	//y = Y;
+	//dx = 0.2;
+	//offsetDx = 0;
 	//dy = 0.02;
-	if (dir==true) dx=-0.2;
-	w = 91;
-	h = 70;
-	life = true;
+	//if (dir==true) dx=-0.2;
+	//w = 91;
+	//h = 70;
+	//life = true;
 }
 
 void Enemy::update(float time) {
-	x += dx * time + (offsetDx - offsetX);
-	offsetDx = offsetX;
-	Collision();
+	x += dx * time; // + (offsetDx - offsetX);
+	//offsetDx = offsetX;
+	if (timer>3200) {dx*=-1;timer=0;} 
+	if (health<=0) {anim.Set("explode"); dx=0;
+			           timer_end+=time;
+		               if (timer_end>4000) life=false;
+		              }
+	//Collision();
 
-	anim.Flip(dx<0);
+	//anim.Flip(dx<0);
 
 	//if ((y>500)||(y<10)) dy=-dy; 
 	

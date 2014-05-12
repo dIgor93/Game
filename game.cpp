@@ -2,49 +2,75 @@
 #include <iostream>
 #include <list>
 
+#include "TinyXML\tinyxml.h"
+
 #include "Animation.hpp"
 #include "Bullet.hpp"
 #include "Enemy.hpp"
 #include "Player.hpp"
+#include "Level.hpp"
 
 using namespace sf; 
 using namespace std;
+
 
 int main()
 {
 	RenderWindow window(sf::VideoMode(tile_size*W/2, tile_size*H), "SFML Application");
 
-	Texture t;
+	View view( FloatRect(0, 0, tile_size*W/2, tile_size*H) );
+	
+	Level lvl;
+	lvl.LoadFromFile("Level_megaman.tmx");
+
+	Texture t,pp;
 	Texture e;
 	Texture b;
-	t.loadFromFile("explosion.png");
-	e.loadFromFile("ninja.png");
-	b.loadFromFile("sur.png");
-
-
+	t.loadFromFile("textures/explosion.png");
+	e.loadFromFile("textures/ninja.png");
+	b.loadFromFile("textures/sur.png");
+	
 
 	AnimationManager anim;
 	//(name, texture, x, y, w, h, count, speed, step;)
-	anim.Create("stay", e, 0, 0, 50, 70, 1, 0.005, 50);
+	/*anim.Create("stay", e, 0, 0, 50, 70, 1, 0.005, 50);
 	anim.Create("walk", e, 0, 70, 65, 70, 8, 0.005, 65);
 	anim.Create("shoot", e, 0, 155, 80, 70, 6, 0.005, 80);
 	anim.Create("jump", e, 85, 455, 55, 70, 3, 0.0013, 55);
-	anim.Create("shootAndWalk", e, 0, 70, 65, 70, 8, 0.005, 65);
-	//anim.Create("duck", e, 350,269, 60, 50, 2, 0.004, 60);
+	//.Create("shootAndWalk", e, 0, 70, 65, 70, 8, 0.005, 65);
+	anim.Create("duck", e, 350,269, 60, 50, 2, 0.004, 60);
+	*/
+	AnimationManager anim1;
+	anim1.loadFromXML("animation.xml",e);
+	anim1.animList["jump"].loop = 0;
 
 	AnimationManager anim2;
 	anim2.Create("move", b, 0, 130, 91, 70, 5, 0.005, 91);
 	anim2.Create("explode", t, 0, 0, 78, 90, 8, 0.005, 78);
 
-	Player p(anim);
-
 	std::list<Entity*> entities;
 	std::list<Entity*>::iterator it;
 
-	entities.push_back(new Enemy(anim2, 100, 200, 0, 35));
-	entities.push_back(new Enemy(anim2, 600, 220, 1, 45));
-	entities.push_back(new Enemy(anim2, 1000, 120, 0, 46));
+	
 
+	Player p(anim1, lvl, 100, 100);
+	/*vector<Object> ti = lvl.GetObjects("solid");
+	for (int i=0; i<ti.size(); i++)
+		ti[i].rect.top + lvl.GetTileSize().y / 2 * (ti[i].rect.height / lvl.GetTileSize().y - 1));
+		*/
+
+	//entities.push_back(new Enemy(anim2, 100, 200));
+	//entities.push_back(new Enemy(anim2, 600, 220));
+	//entities.push_back(new Enemy(anim2, 1000, 120));
+
+	/*std::vector<Object> ee = lvl.GetObjects("enemy");
+	for (int i=0;i < ee.size();i++)
+		entities.push_back(new Enemy(anim2, lvl, ee[i].rect.left, ee[i].rect.top) );
+	/*
+	ee = lvl.GetObjects("MovingPlatform");
+	for (int i=0;i < ee.size();i++)
+		entities.push_back(new MovingPlatform(anim4, lvl, e[i].rect.left, e[i].rect.top) );
+		*/
 	//Enemy enemy(anim2, 100, 90, false);
 	//enemy.SetEnemy(e,200,100);
 
@@ -65,11 +91,12 @@ int main()
 			if (event.type == Event::Closed)
 				window.close();
 			if (event.type == Event::KeyPressed)
-				if (event.key.code==Keyboard::Space)
-					entities.push_back(new Bullet(anim2, p.x-offsetX, p.y-offsetY, p.dir, 10));
+				if (event.key.code==Keyboard::Space) {
+					entities.push_back(new Bullet(anim2, lvl, p.x-offsetX, p.y-offsetY, p.dir));
+				}
 		}
 
-		anim.Set("stay");
+		anim1.Set("stay");
 
 		if (Keyboard::isKeyPressed(Keyboard::A)) p.key["L"]=true;
 		if (Keyboard::isKeyPressed(Keyboard::D)) p.key["R"]=true;
@@ -95,18 +122,10 @@ int main()
 
 		//enemy.update(time);
 
-		if ((p.x > 300)&&(p.x < tile_size*W - 700)) offsetX = p.x - 300;
-
+		if ((p.x > 300)&&(p.x < 1300)) offsetX = p.x - 300;
+		
 		window.clear(Color::White);
-		for (int i=0; i<H; i++) {
-			for (int j=0; j<W; j++) {
-				if (TileMap[i][j] == '0') 
-					rectangle.setFillColor(Color::Color(122,22,1));
-				if (TileMap[i][j] == ' ') continue;
-				rectangle.setPosition(j*tile_size - offsetX,i*tile_size - offsetY);
-				window.draw(rectangle);
-			}
-		}
+		
 		//cout << "=";
 		for (it=entities.begin(); it!=entities.end(); it++) {
 
@@ -122,8 +141,8 @@ int main()
 				//cout << enemy->getRect().left << " " << enemy->getRect().top << " " << enemy->getRect().width << " " << enemy->getRect().height << endl; 
 				//cout << "=";
 				FloatRect R =  enemy->getRect();
-									R.left += offsetX;
-									R.top += offsetY;
+				R.left += offsetX;
+				R.top += offsetY;
 				if (p.getRect().intersects(R))
 					if (p.dy>0) {
 						enemy->dx=0;
@@ -141,7 +160,7 @@ int main()
 							Entity *bullet = *it2;
 							if (bullet->Name=="Bullet")
 								if (bullet->health>0) {
-									
+
 									if (bullet->getRect().intersects(enemy->getRect() )){
 										bullet->health-=5;
 										enemy->health-=5;
@@ -157,10 +176,18 @@ int main()
 
 		////////////////////////////	
 		//отрисовка
+		view.setCenter( p.x,p.y);
+		window.setView(view);
+		window.clear(Color(107,140,255));
+
+		lvl.Draw(window);
+
 		for (it =entities.begin(); it!=entities.end(); it++)
 			(*it)->draw(window);
+
 		//enemy.anim.Draw(window,enemy.x - offsetX,enemy.y-offsetY);
-		p.anim.Draw(window,p.x - offsetX,p.y-offsetY);
+		p.anim.Draw(window,p.x-offsetX,p.y+p.h-offsetY);
+
 
 		window.display();
 	}
