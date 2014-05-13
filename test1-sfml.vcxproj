@@ -154,6 +154,7 @@
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="Level.hpp" />
     <ClInclude Include="PlayerScores.hpp" />
+    <ClInclude Include="Plyuhi.hpp" />
     <ClInclude Include="tinyxml\tinystr.h" />
     <ClInclude Include="tinyxml\tinyxml.h" />
   </ItemGroup>
