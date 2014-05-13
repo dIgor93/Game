@@ -4,51 +4,53 @@
 #include "Level.hpp"
 #include <vector>
 
-class Entity {
+class Entity
+{
 public:
-	float x, y, dx, dy, w, h;
-	int health;
-	std::vector<Object> obj;
+	float x,y,dx,dy,w,h;
 	AnimationManager anim;
-	String Name;
-	float timer, timer_end;
+	std::vector<Object> obj;
 	bool life, dir;
+	float timer, timer_end;
+	String Name;
+	int Health;
 
-	Entity() {};
-	Entity(AnimationManager &A, int X, int Y) {
-		Name = "Entity";
-		health = 10;
+	Entity(AnimationManager &A,int X, int Y)
+	{ 
 		anim = A;
 		x = X;
 		y = Y;
-		dir = false;
-		life = true;
-		dx = dy = 0;
-		timer = timer_end = 0;
+		dir = 0;
+
+		life=true;
+		timer=0;
+		timer_end=0;
+		dx=dy=0;
 	}
 
 	virtual void update(float time) = 0;
 
-	void option(String NAME, float SPEED=0, int HEALTH=10, String FIRST_ANIM="")
+	void draw(RenderWindow &window)
 	{
-		Name = NAME;
-		if (FIRST_ANIM!="") anim.Set(FIRST_ANIM);
-		w = anim.getW();
-		h = anim.getH();
-		dx = SPEED;
-		dir = false;
-		health = HEALTH;	   
+		anim.draw(window,x,y+h);
 	}
 
-	FloatRect getRect(){
-		//auto t = anim.animList[anim.currentAnim].frames[0];
-		//return FloatRect(Vector2f(float(x), float(y)), Vector2f(float(t.width), float(t.height)));
+	FloatRect getRect()
+	{
 		return FloatRect(x,y,w,h);
 	}
 
-	void draw(RenderWindow &window){
-		anim.Draw(window, x, y);
+	void option(String NAME, float SPEED=0, int HEALTH=10, String FIRST_ANIM="")
+	{
+		Name = NAME;
+		if (FIRST_ANIM!="") anim.set(FIRST_ANIM);
+		w = anim.getW();
+		h = anim.getH();
+		dx = SPEED;
+		Health = HEALTH;	   
 	}
+
 };
+
 
 #endif ENT_H

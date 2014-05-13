@@ -141,6 +141,8 @@
     <Image Include="2.png" />
     <Image Include="am.png" />
     <Image Include="anim.gif" />
+    <Image Include="textures\ninja.png" />
+    <Image Include="textures\sheet-enemies.png" />
     <Image Include="tile.png" />
   </ItemGroup>
   <ItemGroup>
@@ -151,11 +153,20 @@
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="Level.hpp" />
+    <ClInclude Include="PlayerScores.hpp" />
     <ClInclude Include="tinyxml\tinystr.h" />
     <ClInclude Include="tinyxml\tinyxml.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Level_megaman.tmx" />
     <None Include="tile.tmx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="animation.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+    <Xml Include="enemy_anim.xml" />
+    <Xml Include="shoot.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

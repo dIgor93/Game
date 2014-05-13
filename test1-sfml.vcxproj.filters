@@ -47,6 +47,12 @@
     <Image Include="tile.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="textures\sheet-enemies.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="textures\ninja.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.hpp">
@@ -76,8 +82,17 @@
     <ClInclude Include="Level.hpp">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerScores.hpp">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="tile.tmx" />
+    <None Include="Level_megaman.tmx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="animation.xml" />
+    <Xml Include="enemy_anim.xml" />
+    <Xml Include="shoot.xml" />
   </ItemGroup>
 </Project>

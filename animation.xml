@@ -1,6 +1,6 @@
 <!DOCTYPE SpriteDecomposer>
 <sprites image="ninja.png" transparentColor="FFFFFF">
- <animation title="attack" delay="210">
+ <animation title="shoot" delay="210">
   <cut w="49" x="15" y="174" h="50" row="1" col="1"/>
   <cut w="53" x="79" y="156" h="70" row="1" col="1"/>
   <cut w="85" x="158" y="151" h="77" row="1" col="1"/>
@@ -8,7 +8,7 @@
   <cut w="70" x="353" y="178" h="50" row="1" col="1"/>
   <cut w="48" x="432" y="181" h="47" row="1" col="1"/>
  </animation>
- <animation title="shoot" delay="210">
+ <animation title="ducking_attack" delay="210">
   <cut w="52" x="12" y="262" h="51" row="1" col="1"/>
   <cut w="84" x="73" y="262" h="51" row="1" col="1"/>
   <cut w="88" x="161" y="264" h="48" row="1" col="1"/>
@@ -16,7 +16,7 @@
   <cut w="68" x="346" y="264" h="48" row="1" col="1"/>
   <cut w="54" x="427" y="264" h="48" row="1" col="1"/>
  </animation>
- <animation title="attack3" delay="210">
+ <animation title="jumping_attack" delay="210">
   <cut w="48" x="16" y="373" h="49" row="1" col="1"/>
   <cut w="69" x="82" y="368" h="51" row="1" col="1"/>
   <cut w="82" x="167" y="333" h="88" row="1" col="1"/>

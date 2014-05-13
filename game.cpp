@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <list>
+//#include <string>
 
 #include "TinyXML\tinyxml.h"
 
@@ -9,188 +10,180 @@
 #include "Enemy.hpp"
 #include "Player.hpp"
 #include "Level.hpp"
+#include "PlayerScores.hpp"
 
 using namespace sf; 
 using namespace std;
 
 
 int main()
-{
-	RenderWindow window(sf::VideoMode(tile_size*W/2, tile_size*H), "SFML Application");
+{  
+	///////////// инициализация ///////////////////////////
+	RenderWindow window(VideoMode(600, 450), "SFML works!");
 
-	View view( FloatRect(0, 0, tile_size*W/2, tile_size*H) );
-	
+	View view( FloatRect(0, 0, 600, 450) );
+
 	Level lvl;
 	lvl.LoadFromFile("Level_megaman.tmx");
 
-	Texture t,pp;
-	Texture e;
-	Texture b;
-	t.loadFromFile("textures/explosion.png");
-	e.loadFromFile("textures/ninja.png");
-	b.loadFromFile("textures/sur.png");
-	
+	Texture tileSet, moveplatform, megaman, fang, tEnemy;
+
+	tileSet.loadFromFile("tile.png");
+	//moveplatform.loadFromFile("files/movingPlatform.png");
+	megaman.loadFromFile("textures/ninja.png");
+	//fang.loadFromFile("files/fanq.png");
+	tEnemy.loadFromFile("textures/sheet-enemies.png");
+
+	AnimationManager anim3;
+	anim3.loadFromXML("enemy_anim.xml",tEnemy);
 
 	AnimationManager anim;
-	//(name, texture, x, y, w, h, count, speed, step;)
-	/*anim.Create("stay", e, 0, 0, 50, 70, 1, 0.005, 50);
-	anim.Create("walk", e, 0, 70, 65, 70, 8, 0.005, 65);
-	anim.Create("shoot", e, 0, 155, 80, 70, 6, 0.005, 80);
-	anim.Create("jump", e, 85, 455, 55, 70, 3, 0.0013, 55);
-	//.Create("shootAndWalk", e, 0, 70, 65, 70, 8, 0.005, 65);
-	anim.Create("duck", e, 350,269, 60, 50, 2, 0.004, 60);
-	*/
-	AnimationManager anim1;
-	anim1.loadFromXML("animation.xml",e);
-	anim1.animList["jump"].loop = 0;
+	anim.loadFromXML("animation.xml",megaman);
+	anim.animList["jump"].loop = 0;
 
 	AnimationManager anim2;
-	anim2.Create("move", b, 0, 130, 91, 70, 5, 0.005, 91);
-	anim2.Create("explode", t, 0, 0, 78, 90, 8, 0.005, 78);
+	anim2.loadFromXML("shoot.xml",tEnemy);
 
-	std::list<Entity*> entities;
+	offsetX = 0;
+
+	/*
+	AnimationManager anim4;
+	anim4.create("move",moveplatform,0,0,95,22,1,0);
+	*/
+
+	std::list<Entity*>  entities;
 	std::list<Entity*>::iterator it;
 
-	
-
-	Player p(anim1, lvl, 100, 100);
-	/*vector<Object> ti = lvl.GetObjects("solid");
-	for (int i=0; i<ti.size(); i++)
-		ti[i].rect.top + lvl.GetTileSize().y / 2 * (ti[i].rect.height / lvl.GetTileSize().y - 1));
-		*/
-
-	//entities.push_back(new Enemy(anim2, 100, 200));
-	//entities.push_back(new Enemy(anim2, 600, 220));
-	//entities.push_back(new Enemy(anim2, 1000, 120));
-
-	/*std::vector<Object> ee = lvl.GetObjects("enemy");
+	std::vector<Object> ee = lvl.GetObjects("enemy");
 	for (int i=0;i < ee.size();i++)
-		entities.push_back(new Enemy(anim2, lvl, ee[i].rect.left, ee[i].rect.top) );
+		entities.push_back(new ENEMY(anim3, lvl, ee[i].rect.left, ee[i].rect.top) );
 	/*
-	ee = lvl.GetObjects("MovingPlatform");
-	for (int i=0;i < ee.size();i++)
-		entities.push_back(new MovingPlatform(anim4, lvl, e[i].rect.left, e[i].rect.top) );
-		*/
-	//Enemy enemy(anim2, 100, 90, false);
-	//enemy.SetEnemy(e,200,100);
+	e = lvl.GetObjects("MovingPlatform");
+	for (int i=0;i < e.size();i++)
+	entities.push_back(new MovingPlatform(anim4, lvl, e[i].rect.left, e[i].rect.top) );
+	*/
+	Object pl = lvl.GetObject("player");
+	PLAYER Mario(anim, lvl, pl.rect.left, pl.rect.top);
+	PlayerScores plScores;
+	int Scores = 0;
 
 	Clock clock;
 
-	RectangleShape rectangle;
-	rectangle.setSize(Vector2f(tile_size,tile_size));
-
-	while (window.isOpen()) {
+	/////////////////// основной цикл  /////////////////////
+	while ((window.isOpen())&&(Mario.Health>0))
+	{ 
 		float time = clock.getElapsedTime().asMicroseconds();
 		clock.restart();
 
-		time = time / 500;
+		time = time/500;  // здесь регулируем скорость игры
 
-		if (time>20) time-=20;
+		if (time > 40) time = 40; 
+
 		Event event;
-		while (window.pollEvent(event)) {
-			if (event.type == Event::Closed)
+		while (window.pollEvent(event))
+		{
+			if (event.type == Event::Closed)      
 				window.close();
+
 			if (event.type == Event::KeyPressed)
-				if (event.key.code==Keyboard::Space) {
-					entities.push_back(new Bullet(anim2, lvl, p.x-offsetX, p.y-offsetY, p.dir));
+				if (event.key.code==Keyboard::Space)
+					entities.push_back(new Bullet(anim2,lvl,Mario.x+18,Mario.y+18,Mario.dir) );	
+		}
+
+
+		if (Keyboard::isKeyPressed(Keyboard::A)) Mario.key["L"]=true;
+		if (Keyboard::isKeyPressed(Keyboard::D)) Mario.key["R"]=true;
+		if (Keyboard::isKeyPressed(Keyboard::W)) Mario.key["Up"]=true;
+		if (Keyboard::isKeyPressed(Keyboard::S)) Mario.key["Down"]=true;
+		if (Keyboard::isKeyPressed(Keyboard::Space)) Mario.key["Space"]=true;
+
+
+		for(it=entities.begin();it!=entities.end();)
+		{
+			Entity *b = *it; 
+			b->update(time);
+			if (b->life==false)	{ 
+				if (b->Name == "Enemy") {
+					Scores+=10; 
+					std::cout << "kill " ;
 				}
-		}
-
-		anim1.Set("stay");
-
-		if (Keyboard::isKeyPressed(Keyboard::A)) p.key["L"]=true;
-		if (Keyboard::isKeyPressed(Keyboard::D)) p.key["R"]=true;
-		if (Keyboard::isKeyPressed(Keyboard::W)) p.key["Up"]=true;
-		if (Keyboard::isKeyPressed(Keyboard::S)) p.key["Down"]=true;
-		if (Keyboard::isKeyPressed(Keyboard::Space)) {
-			p.key["Space"]=true;
-		}
-
-		for (it=entities.begin(); it!=entities.end();){
-			Entity *b = dynamic_cast<Entity*>(*it);
-			if (b->life == false) {
-				it = entities.erase(it);
-				delete b;
-			}
+				it  = entities.erase(it); delete b;}
 			else it++;
 		}
+		//std::cout<< entities.size() << std::endl;
 
-		for (it = entities.begin(); it != entities.end(); it++)
-			(*it)->update(time);
+		offsetX += 0.03*time;
+		//std::cout << offsetX << " " << Mario.x << std::endl;
 
-		p.update(time);
+		Mario.update(time);
 
-		//enemy.update(time);
+		plScores.update(Mario.Health,std::to_string(Scores));
+		/*
+		if (Mario.x < 300) offsetX = Mario.x - 300;
+		if (Mario.x > 1200) offsetX = Mario.x - 1200;
+		*/
+		if (Mario.y < 230) offsetY = Mario.y - 230;
+		if (Mario.y > 750) offsetY = Mario.y - 750;
 
-		if ((p.x > 300)&&(p.x < 1300)) offsetX = p.x - 300;
-		
-		window.clear(Color::White);
-		
-		//cout << "=";
-		for (it=entities.begin(); it!=entities.end(); it++) {
 
-			if ((*it)->Name=="Enemy") {
+		for(it=entities.begin();it!=entities.end();it++)
+		{   
+			//1. враги
+			if ((*it)->Name=="Enemy")
+			{
 				Entity *enemy = *it;
-				if (enemy->health <= 0){
-					enemy->life = false;
 
-					enemy->anim.animList[enemy->anim.currentAnim].sprite.setColor(Color::Red);
-					continue;
+				if (enemy->Health<=0) {
+
+					continue; 
 				}
+				if  (Mario.getRect().intersects( enemy->getRect() ))
+					if (Mario.dy>0) { enemy->dx=0; Mario.dy=-0.2; enemy->Health=0;}
+					else if (!Mario.hit) { Mario.Health-=5; Mario.hit=true;
+					if (Mario.dir) Mario.x+=10; else Mario.x-=10;}
 
-				//cout << enemy->getRect().left << " " << enemy->getRect().top << " " << enemy->getRect().width << " " << enemy->getRect().height << endl; 
-				//cout << "=";
-				FloatRect R =  enemy->getRect();
-				R.left += offsetX;
-				R.top += offsetY;
-				if (p.getRect().intersects(R))
-					if (p.dy>0) {
-						enemy->dx=0;
-						p.dy=-0.2;
-						enemy->health=0;
-					}
-					else 
-						if (!p.hit) {
-							p.health-=5;
-							p.hit=true;
-							cout << "hit";
-							p.anim.animList[p.anim.currentAnim].sprite.setColor(Color::Red);
-						}
-						for (std::list<Entity*>::iterator it2=entities.begin(); it2!=entities.end(); it2++){
-							Entity *bullet = *it2;
-							if (bullet->Name=="Bullet")
-								if (bullet->health>0) {
 
-									if (bullet->getRect().intersects(enemy->getRect() )){
-										bullet->health-=5;
-										enemy->health-=5;
-										anim2.Set("explode");
-										if (bullet->health==0) bullet->life = false;
-									}
+					for (std::list<Entity*>::iterator it2=entities.begin(); it2!=entities.end(); it2++)
+					{	
+						Entity *bullet = *it2;
+						if (bullet->Name=="Bullet") 
+							if ( bullet->Health>0)
+								if  (bullet->getRect().intersects( enemy->getRect() ) ) { 
+									bullet->Health=0; 
+									enemy->Health-=5; 
 								}
-						}
+					}
 			}
+
 		}
 
+		/////////////////////отображаем на экран/////////////////////
 
-
-		////////////////////////////	
-		//отрисовка
-		view.setCenter( p.x,p.y);
+		view.setCenter(/* Mario.x - */offsetX ,Mario.y - offsetY);
 		window.setView(view);
+
 		window.clear(Color(107,140,255));
 
 		lvl.Draw(window);
 
-		for (it =entities.begin(); it!=entities.end(); it++)
+		for(it=entities.begin();it!=entities.end();it++)
 			(*it)->draw(window);
 
-		//enemy.anim.Draw(window,enemy.x - offsetX,enemy.y-offsetY);
-		p.anim.Draw(window,p.x-offsetX,p.y+p.h-offsetY);
-
+		Mario.draw(window);
+		plScores.draw(window);
 
 		window.display();
 	}
+
+	window.close();
+
+	std::cout << std::endl;
+	std::cout << "   0     000  0   0 " <<std::endl;
+	std::cout << "  0 0   0   0  0 0  " <<std::endl;
+	std::cout << " 0   0  0   0   0   " <<std::endl;
+	std::cout << " 0   0  0   0  0 0  " <<std::endl;
+	std::cout << " 0   0   000  0   0 " <<std::endl;
+
 	system("pause");
 	return 0;
 }
