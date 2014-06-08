@@ -1,0 +1,22 @@
+<!DOCTYPE SpriteDecomposer>
+<sprites image="sheet-enemies.png" transparentColor="0">
+ <animation title="walk" delay="230">
+  <cut w="29" x="0" y="0" h="46" row="1" col="1"/>
+  <cut w="30" x="49" y="-0.5" h="46" row="1" col="1"/>
+  <cut w="31" x="99" y="0" h="45" row="1" col="1"/>
+  <cut w="32" x="148" y="0" h="45" row="1" col="1"/>
+ </animation>
+ <animation title="walk2" delay="230">
+  <cut w="24" x="2" y="103" h="39" row="1" col="1"/>
+  <cut w="22" x="53" y="103" h="40" row="1" col="1"/>
+  <cut w="24" x="102" y="104" h="38" row="1" col="1"/>
+  <cut w="22" x="153" y="103" h="39" row="1" col="1"/>
+ </animation>
+ <animation title="dead" delay="230">
+  <cut w="24" x="402" y="17" h="45" row="1" col="1"/>
+  <cut w="24" x="438" y="5" h="58" row="1" col="1"/>
+  <cut w="26" x="488" y="9" h="68" row="1" col="1"/>
+  <cut w="30" x="399" y="81" h="47" row="1" col="1"/>
+  <cut w="30" x="529" y="23" h="45" row="1" col="1"/>
+ </animation>
+</sprites>

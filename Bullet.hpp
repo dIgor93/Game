@@ -5,51 +5,43 @@
 #include "Animation.hpp"
 #include "Globals.hpp"
 #include "Entity.hpp"
+#include "Level.hpp"
 
 using namespace sf;
 
-class Bullet : public Entity {
+class Bullet:public Entity
+{
 public:
-	//float x, y, dx, dy, w, h;
-	//AnimationManager anim;
-	//bool life;
-public:
-	Bullet() {};
-	Bullet(AnimationManager &a, int X, int Y, bool dir, int Health);
-	void update(float time);
-	void draw(RenderWindow &window);
+
+	Bullet(AnimationManager &a, Level &lev,int x,int y,bool dir):Entity(a,x,y)
+	{
+		option("Bullet", 0.3, 10, "shoot");
+
+		if (dir) dx=-0.3;
+   		obj = lev.GetObjects("solid");
+		
+	}
+
+	void update(float time)
+	{
+		x+=dx*time;
+		
+		for (int i=0;i<obj.size();i++) 
+			if (getRect().intersects(obj[i].rect)) {
+				Health=0;
+			}
+
+		if (Health<=0) {
+			anim.set("explode");
+			dx=0;
+		    if (anim.isPlaying()==false) ;
+			life=false;    
+		}
+
+		anim.tick(time);		 
+	}
+
 };
 
-Bullet::Bullet(AnimationManager &a, int X, int Y, bool dir, int Health) {
-	Name = "Bullet";
-	health = Health;
-	anim = a;
-	anim.Set("move");
-	anim.Flip(dir);
-	x = X;
-	y = Y;
-	dx = 0.3;
-	dy = 0;
-	if (dir==true) dx=-0.3;
-	w = 91;
-	h = 70;
-	life = true;
-}
-
-void Bullet::update(float time) {
-	x += dx * time;
-
-	for (int i = (y+offsetY)/tile_size; i<(y+h+offsetY)/tile_size; i++)
-		for (int j= (x+offsetX)/tile_size; j<(x+w+offsetX)/tile_size; j++)
-			if (TileMap[i][j]=='0') {
-				//anim.Set("explode");
-				dx = 0;
-				life = false;
-			}
-			anim.Tick(time);
-}
-void Bullet::draw(RenderWindow &window) {
-	anim.Draw(window, x, y);
-}
 
 #endif BULL_H

@@ -1,0 +1,58 @@
+<!DOCTYPE SpriteDecomposer>
+<sprites image="ninja.png" transparentColor="FFFFFF">
+ <animation title="shoot" delay="210">
+  <cut w="49" x="15" y="174" h="50" row="1" col="1"/>
+  <cut w="53" x="79" y="156" h="70" row="1" col="1"/>
+  <cut w="85" x="158" y="151" h="77" row="1" col="1"/>
+  <cut w="83" x="258" y="178" h="50" row="1" col="1"/>
+  <cut w="70" x="353" y="178" h="50" row="1" col="1"/>
+  <cut w="48" x="432" y="181" h="47" row="1" col="1"/>
+ </animation>
+ <animation title="ducking_attack" delay="210">
+  <cut w="52" x="12" y="262" h="51" row="1" col="1"/>
+  <cut w="84" x="73" y="262" h="51" row="1" col="1"/>
+  <cut w="88" x="161" y="264" h="48" row="1" col="1"/>
+  <cut w="71" x="261" y="264" h="48" row="1" col="1"/>
+  <cut w="68" x="346" y="264" h="48" row="1" col="1"/>
+  <cut w="54" x="427" y="264" h="48" row="1" col="1"/>
+ </animation>
+ <animation title="jumping_attack" delay="210">
+  <cut w="48" x="16" y="373" h="49" row="1" col="1"/>
+  <cut w="69" x="82" y="368" h="51" row="1" col="1"/>
+  <cut w="82" x="167" y="333" h="88" row="1" col="1"/>
+  <cut w="68" x="264" y="340" h="80" row="1" col="1"/>
+  <cut w="68" x="351" y="371" h="49" row="1" col="1"/>
+  <cut w="57" x="434" y="374" h="46" row="1" col="1"/>
+ </animation>
+ <animation title="jump" delay="210">
+  <cut w="53" x="16" y="471" h="45" row="1" col="1"/>
+  <cut w="47" x="85" y="457" h="59" row="1" col="1"/>
+  <cut w="55" x="135" y="460" h="54" row="1" col="1"/>
+  <cut w="54" x="195" y="458" h="55" row="1" col="1"/>
+  <cut w="65" x="256" y="540" h="88" row="1" col="1"/>
+ </animation>
+ <animation title="jump_attack" delay="210">
+  <cut w="41" x="21" y="531" h="61" row="1" col="1"/>
+  <cut w="71" x="81" y="536" h="58" row="1" col="1"/>
+  <cut w="80" x="164" y="536" h="54" row="1" col="1"/>
+  <cut w="65" x="256" y="540" h="50" row="1" col="1"/>
+  <cut w="63" x="336" y="539" h="50" row="1" col="1"/>
+  <cut w="49" x="423" y="537" h="53" row="1" col="1"/>
+ </animation>
+ <animation title="walk" delay="210">
+  <cut w="52" x="8" y="85" h="47" row="1" col="1"/>
+  <cut w="54" x="69" y="87" h="45" row="1" col="1"/>
+  <cut w="50" x="134" y="85" h="47" row="1" col="1"/>
+  <cut w="55" x="194" y="84" h="48" row="1" col="1"/>
+  <cut w="53" x="260" y="84" h="48" row="1" col="1"/>
+  <cut w="49" x="326" y="86" h="46" row="1" col="1"/>
+  <cut w="47" x="387" y="85" h="47" row="1" col="1"/>
+  <cut w="48" x="444" y="84" h="48" row="1" col="1"/>
+ </animation>
+ <animation title="duck" delay="210">
+  <cut w="51" x="79" y="21" h="46" row="1" col="1"/>
+ </animation>
+ <animation title="stay" delay="150">
+  <cut w="27" x="10" y="6" h="64" row="1" col="1"/>
+ </animation>
+</sprites>

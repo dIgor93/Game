@@ -1,36 +1,56 @@
 #ifndef ENT_H
 #define ENT_H
 
-class Entity {
-public:
-	float x, y, dx, dy, w, h;
-	int health;
-	AnimationManager anim;
-	String Name;
-	bool life, dir;
+#include "Level.hpp"
+#include <vector>
 
-	Entity() {};
-	Entity(AnimationManager &A, int X, int Y, int Health) {
-		Name = "Entity";
-		health = Health;
+class Entity
+{
+public:
+	float x,y,dx,dy,w,h;
+	AnimationManager anim;
+	std::vector<Object> obj;
+	bool life, dir;
+	float timer, timer_end;
+	String Name;
+	int Health;
+
+	Entity(AnimationManager &A,int X, int Y)
+	{ 
 		anim = A;
 		x = X;
 		y = Y;
-		dir = false;
-		life = true;
-		dx = dy = 0;
+		dir = 0;
+
+		life=true;
+		timer=0;
+		timer_end=0;
+		dx=dy=0;
 	}
 
 	virtual void update(float time) = 0;
 
-	FloatRect getRect(){
-		auto t = anim.animList[anim.currentAnim].frames[0];
-		return FloatRect(Vector2f(float(x), float(y)), Vector2f(float(t.width), float(t.height)));
+	void draw(RenderWindow &window)
+	{
+		anim.draw(window,x,y+h);
 	}
 
-	void draw(RenderWindow &window){
-		anim.Draw(window, x, y);
+	FloatRect getRect()
+	{
+		return FloatRect(x,y,w,h);
 	}
+
+	void option(String NAME, float SPEED=0, int HEALTH=10, String FIRST_ANIM="")
+	{
+		Name = NAME;
+		if (FIRST_ANIM!="") anim.set(FIRST_ANIM);
+		w = anim.getW();
+		h = anim.getH();
+		dx = SPEED;
+		Health = HEALTH;	   
+	}
+
 };
+
 
 #endif ENT_H
