@@ -10,7 +10,6 @@ const int W = 40;
 
 float offsetX = 0;
 float offsetY = 0;
-float screen_speed = 0.03;
 
 int tile_size = 50;
 
