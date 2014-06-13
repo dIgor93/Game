@@ -1,4 +1,4 @@
-﻿Сборка начата 13.05.2014 21:00:54.
+﻿Сборка начата 13.05.2014 23:49:31.
      1>Проект "C:\Users\Директор\Projects Visual Studio\test1-sfml\test1-sfml\test1-sfml.vcxproj" в узле 2 (целевые объекты Build).
      1>InitializeBuildStatus:
          Создание "x64\Debug\test1-sfml.unsuccessfulbuild", так как было задано "AlwaysCreate".
@@ -21,6 +21,7 @@
      1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Animation.hpp(126): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
      1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Animation.hpp(142): warning C4244: return: преобразование "int" в "float", возможна потеря данных
      1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Animation.hpp(147): warning C4244: return: преобразование "int" в "float", возможна потеря данных
+     1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Globals.hpp(13): warning C4305: инициализация: усечение из "double" к "float"
      1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Entity.hpp(21): warning C4244: =: преобразование "int" в "float", возможна потеря данных
      1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Entity.hpp(22): warning C4244: =: преобразование "int" в "float", возможна потеря данных
      1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Entity.hpp(35): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
@@ -35,18 +36,18 @@
      1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Player.hpp(44): warning C4305: =: усечение из "double" к "float"
      1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Player.hpp(51): warning C4305: =: усечение из "double" к "float"
      1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Player.hpp(116): warning C4305: =: усечение из "double" к "float"
-     1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Player.hpp(127): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-     1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Player.hpp(155): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
-     1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Player.hpp(158): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-     1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Player.hpp(163): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
-     1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Player.hpp(166): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+     1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Player.hpp(128): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+     1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Player.hpp(156): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+     1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Player.hpp(159): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+     1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Player.hpp(164): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+     1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\Player.hpp(167): warning C4244: =: преобразование "int" в "float", возможна потеря данных
      1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\PlayerScores.hpp(45): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-     1>game.cpp(59): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-     1>game.cpp(66): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-     1>game.cpp(75): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
-     1>game.cpp(90): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-     1>game.cpp(115): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-     1>game.cpp(141): warning C4305: =: усечение из "double" к "float"
+     1>game.cpp(60): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+     1>game.cpp(68): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+     1>game.cpp(73): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+     1>game.cpp(82): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
+     1>game.cpp(97): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+     1>game.cpp(148): warning C4305: =: усечение из "double" к "float"
      1>c:\users\директор\projects visual studio\test1-sfml\test1-sfml\level.hpp(312): warning C4715: Level::GetObject: значение возвращается не при всех путях выполнения
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Директор\Projects Visual Studio\test1-sfml\x64\Debug\test1-sfml.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Директор\Projects Visual Studio\test1-sfml\test1-sfml\tinyxml" /LIBPATH:"D:\SFML-2.1\lib" "sfml-graphics-s-d.lib" "sfml-window-s-d.lib" "sfml-system-s-d.lib" "sfml-audio-s-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Директор\Projects Visual Studio\test1-sfml\x64\Debug\test1-sfml.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Директор\Projects Visual Studio\test1-sfml\x64\Debug\test1-sfml.lib" /MACHINE:X64 x64\Debug\game.obj
@@ -62,4 +63,4 @@
 
 Сборка успешно завершена.
 
-Затраченное время: 00:00:04.61
+Затраченное время: 00:00:04.09

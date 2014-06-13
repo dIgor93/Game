@@ -11,6 +11,7 @@
 #include "Player.hpp"
 #include "Level.hpp"
 #include "PlayerScores.hpp"
+#include "Plyuhi.hpp"
 
 using namespace sf; 
 using namespace std;
@@ -58,10 +59,16 @@ int main()
 	for (int i=0;i < ee.size();i++)
 		entities.push_back(new ENEMY(anim3, lvl, ee[i].rect.left, ee[i].rect.top) );
 	/*
-	e = lvl.GetObjects("MovingPlatform");
-	for (int i=0;i < e.size();i++)
-	entities.push_back(new MovingPlatform(anim4, lvl, e[i].rect.left, e[i].rect.top) );
+	ee = lvl.GetObjects("Plyuhi");
+	for (int i=0;i < ee.size();i++)
+	entities.push_back(new Plyuhi(anim4, lvl, ee[i].rect.left, ee[i].rect.top) );
 	*/
+	ee = lvl.GetObjects("bonus");
+	for (int i=0;i < ee.size();i++)
+		entities.push_back(new Plyuhi(anim3, lvl, ee[i].rect.left, ee[i].rect.top ,"money",100));
+	//Plyuhi bonus(anim3, lvl, 500, 100,"money",int(100));
+
+
 	Object pl = lvl.GetObject("player");
 	PLAYER Mario(anim, lvl, pl.rect.left, pl.rect.top);
 	PlayerScores plScores;
@@ -112,10 +119,11 @@ int main()
 		}
 		//std::cout<< entities.size() << std::endl;
 
-		offsetX += 0.03*time;
+		offsetX += screen_speed*time;
 		//std::cout << offsetX << " " << Mario.x << std::endl;
 
 		Mario.update(time);
+
 
 		plScores.update(Mario.Health,std::to_string(Scores));
 		/*
@@ -134,7 +142,6 @@ int main()
 				Entity *enemy = *it;
 
 				if (enemy->Health<=0) {
-
 					continue; 
 				}
 				if  (Mario.getRect().intersects( enemy->getRect() ))
@@ -153,6 +160,17 @@ int main()
 									enemy->Health-=5; 
 								}
 					}
+			}
+			//2.Плюхи!
+			if ((*it)->Name=="money") {
+				Entity *bon = *it;
+				if (bon->Health<=0) {
+					continue; 
+				}
+				if  (Mario.getRect().intersects( bon->getRect() )) {
+					Scores += bon->Health;	
+					bon->Health=0;
+				}
 			}
 
 		}

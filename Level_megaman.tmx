@@ -4855,5 +4855,11 @@
   <object name="MovingPlatform" x="1024" y="759" width="117" height="22"/>
   <object name="solid" x="29" y="15" width="1621" height="13"/>
   <object name="solid" x="1467" y="517" width="35" height="410"/>
+  <object name="bonus" x="374" y="69" width="33" height="32"/>
+  <object name="bonus" x="672" y="352" width="33" height="32"/>
+  <object name="bonus" x="412" y="470" width="33" height="32"/>
+  <object name="bonus" x="349" y="343" width="33" height="32"/>
+  <object name="bonus" x="883" y="841" width="33" height="32"/>
+  <object name="bonus" x="1245" y="786" width="33" height="32"/>
  </objectgroup>
 </map>
